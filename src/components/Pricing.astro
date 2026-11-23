@@ -1,0 +1,286 @@
+---
+import Icon from './Icon.astro'
+import { plans, allPlansInclude, currency } from '../data/content'
+---
+
+<section class='section' id='planes'>
+  <div class='container'>
+    <div class='section-head reveal'>
+      <span class='eyebrow'>Planes</span>
+      <h2>
+        Todas las funciones. <span class='grad-text'
+          >Pagas según tus productos.</span>
+      </h2>
+      <p>
+        Sin funciones bloqueadas ni sorpresas: cada plan incluye todo. Elige el
+        que se ajuste al tamaño de tu catálogo y cambia cuando crezcas.
+      </p>
+    </div>
+
+    <div class='toggle reveal' role='group' aria-label='Periodo de facturación'>
+      <button type='button' data-period='monthly' aria-pressed='true'
+        >Mensual</button
+      >
+      <button type='button' data-period='yearly' aria-pressed='false'
+        >Anual <span>-20%</span></button
+      >
+    </div>
+
+    <div class='plans'>
+      {
+        plans.map((p, i) => (
+          <article
+            class:list={['plan', 'reveal', { featured: p.featured }]}
+            style={`--d:${i * 90}ms`}
+          >
+            {p.featured && <span class='pop'>Más elegido</span>}
+            <h3>{p.name}</h3>
+            <p class='d'>{p.desc}</p>
+            <div class='price' data-monthly={p.monthly} data-yearly={p.yearly}>
+              <>
+                <span class='cur'>{currency}</span>
+                <strong class='amt'>{p.monthly}</strong>
+                <span class='per'>/mes</span>
+              </>
+            </div>
+            <div class='limit'>
+              <Icon name='box' size={18} />
+              <span>
+                Hasta <b>{p.products}</b> productos
+              </span>
+            </div>
+            <a
+              href='#empezar'
+              class:list={['btn', p.featured ? 'btn-primary' : 'btn-secondary']}
+            >
+              {p.cta}
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class='incl reveal'>
+      <h3>Incluido en todos los planes</h3>
+      <ul>
+        {
+          allPlansInclude.map((f) => (
+            <li>
+              <Icon name='check' size={18} /> {f}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <p class='ent reveal'>
+      ¿Más de 12,000 productos? <a href='#proximamente'>Escríbenos</a> y armamos un
+      plan a tu medida.
+    </p>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('#planes')
+  const buttons = root?.querySelectorAll<HTMLButtonElement>('[data-period]')
+  buttons?.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const period = btn.dataset.period as 'monthly' | 'yearly'
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)))
+      root?.querySelectorAll<HTMLElement>('.price').forEach((el) => {
+        const amt = el.querySelector('.amt')
+        if (amt) amt.textContent = el.dataset[period] ?? ''
+      })
+    }),
+  )
+</script>
+
+<style>
+  .toggle {
+    margin: 2.2rem 0 2rem;
+    display: inline-flex;
+    padding: 0.3rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--snow);
+  }
+  .toggle button {
+    border: 0;
+    background: transparent;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font: 600 0.9rem var(--font-head);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .toggle button[aria-pressed='true'] {
+    background: #fff;
+    color: var(--blue);
+    box-shadow: var(--shadow-sm);
+  }
+  .toggle span {
+    font-size: 0.68rem;
+    color: var(--ok);
+    margin-left: 0.3rem;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.1rem;
+    align-items: stretch;
+  }
+  .plan {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    padding: 1.8rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s;
+  }
+  .plan:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .plan.featured {
+    background: linear-gradient(160deg, var(--blue), var(--navy));
+    border: 0;
+    color: #cfd4ff;
+    box-shadow: var(--shadow-lg);
+  }
+  .plan.featured h3,
+  .plan.featured .price {
+    color: #fff;
+  }
+  .pop {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    translate: -50% 0;
+    background: #fff;
+    color: var(--blue);
+    font: 700 0.72rem var(--font-head);
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+    white-space: nowrap;
+  }
+  h3 {
+    font-size: 1.4rem;
+  }
+  .d {
+    color: var(--muted);
+    font-size: 0.92rem;
+    min-height: 3.2em;
+  }
+  .featured .d {
+    color: #b9c0f5;
+  }
+  .price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.2rem;
+    color: var(--deep-blue);
+    font-family: var(--font-head);
+  }
+  .cur {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .amt {
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+  .per {
+    font: 500 0.9rem var(--font-body);
+    opacity: 0.7;
+    margin-left: 0.2rem;
+  }
+  .limit {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: var(--blue-soft);
+    color: var(--navy);
+    font-size: 0.95rem;
+  }
+  .featured .limit {
+    background: rgb(255 255 255 / 0.14);
+    color: #fff;
+  }
+  .plan .btn {
+    margin-top: 0.4rem;
+  }
+  .featured .btn-primary {
+    background: #fff;
+    color: var(--blue);
+    box-shadow: none;
+  }
+
+  .incl {
+    margin-top: 2.5rem;
+    padding: 2rem;
+    border-radius: var(--radius);
+    background: var(--snow);
+    border: 1px solid var(--line);
+  }
+  .incl h3 {
+    font-size: 1.15rem;
+    margin-bottom: 1.1rem;
+  }
+  .incl ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem 1.5rem;
+  }
+  .incl li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+  }
+  .incl li :global(svg) {
+    color: var(--blue);
+    flex: none;
+    margin-top: 0.15rem;
+  }
+  .ent {
+    margin-top: 1.5rem;
+    text-align: center;
+    color: var(--muted);
+  }
+  .ent a {
+    color: var(--blue);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 1050px) {
+    .plans {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .incl ul {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 620px) {
+    .plans {
+      grid-template-columns: 1fr;
+    }
+    .incl ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

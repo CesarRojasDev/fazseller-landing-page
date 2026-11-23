@@ -1,0 +1,24 @@
+---
+import Icon from './Icon.astro';
+import { benefits } from '../data/content';
+---
+<section class="ben" aria-label="Beneficios">
+  <div class="container list">
+    {benefits.map((b) => (
+      <div class="b reveal">
+        <span class="ic"><Icon name={b.icon} size={22} /></span>
+        <div><strong>{b.title}</strong><span>{b.desc}</span></div>
+      </div>
+    ))}
+  </div>
+</section>
+<style>
+  .ben { padding-block: 3rem; border-bottom: 1px solid var(--line); }
+  .list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; }
+  .b { display: flex; gap: .8rem; align-items: center; }
+  .ic { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); color: var(--blue); }
+  strong { display: block; font: 700 .85rem var(--font-head); text-transform: uppercase; letter-spacing: .02em; color: var(--deep-blue); }
+  span:not(.ic) { font-size: .85rem; color: var(--muted); }
+  @media (max-width: 980px) { .list { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .list { grid-template-columns: 1fr; } }
+</style>

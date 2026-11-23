@@ -1,0 +1,269 @@
+---
+import Icon from './Icon.astro'
+import { tools } from '../data/content'
+---
+
+<section class='section' id='herramientas'>
+  <div class='container'>
+    <div class='section-head reveal'>
+      <span class='eyebrow'>Disponible hoy</span>
+      <h2>
+        Herramientas listas para <span class='grad-text'>vender desde hoy</span>
+      </h2>
+      <p>
+        Catálogos, etiquetas y SKU profesionales en minutos. Menos hojas de
+        cálculo, menos errores y más tiempo para lo que de verdad hace crecer tu
+        negocio.
+      </p>
+    </div>
+    <div class='bento'>
+      {
+        tools
+          .filter((t) => t.size !== 'sm')
+          .map((t, i) => (
+          <article class={`card ${t.size} reveal`} style={`--d:${i * 90}ms`}>
+            <div class='top'>
+              <span class='ic'>
+                <Icon name={t.icon} size={26} />
+              </span>
+              <span
+                class={`badge ${t.tag === 'Disponible' ? 'badge-live' : 'badge-soon'}`}
+              >
+                {t.tag}
+              </span>
+            </div>
+            <h3>{t.title}</h3>
+            <p>{t.desc}</p>
+            {t.size === 'lg' && (
+              <div class='demo' aria-hidden='true'>
+                <div class='pg'>
+                  <i />
+                  <b />
+                  <b />
+                </div>
+                <div class='pg'>
+                  <i />
+                  <b />
+                  <b />
+                </div>
+                <div class='pg'>
+                  <i />
+                  <b />
+                  <b />
+                </div>
+              </div>
+            )}
+            {t.title.includes('etiquetas') && (
+              <div class='lbl' aria-hidden='true'>
+                <span>SKU-0042</span>
+                <div class='bars' />
+                <strong>$24.90</strong>
+              </div>
+            )}
+            {t.title.includes('SKU') && (
+              <div class='sku' aria-hidden='true'>
+                <code>POLO-AZL-M</code>
+                <code>POLO-AZL-L</code>
+                <code>POLO-NGR-M</code>
+              </div>
+            )}
+          </article>
+        ))
+      }
+    </div>
+    <p class='more reveal'>
+      <span class='dot'></span>
+      <span>
+        <strong>Muy pronto:</strong> actualización de stock y precio y más
+        herramientas.
+        <a href='#proximamente'>Ver qué viene →</a>
+      </span>
+    </p>
+  </div>
+</section>
+<style>
+  .bento {
+    margin-top: 3.2rem;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.2rem;
+  }
+  .card {
+    grid-column: span 3;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    display: grid;
+    gap: 0.8rem;
+    align-content: start;
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s,
+      border-color 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: #c9d0ff;
+  }
+  .card.lg {
+    grid-column: span 4;
+    grid-row: span 2;
+    background: linear-gradient(160deg, #fff 40%, #eef0ff);
+  }
+  .card.md {
+    grid-column: span 2;
+  }
+  .card.sm {
+    grid-column: span 6;
+    background: var(--deep-blue);
+    border-color: var(--deep-blue);
+    color: #cfd4ff;
+  }
+  .card.sm h3 {
+    color: #fff;
+  }
+  .card.sm .ic {
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--blue-soft);
+    color: var(--blue);
+  }
+  h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-top: 0.6rem;
+  }
+  .card p {
+    color: var(--muted);
+    max-width: 52ch;
+  }
+  .card.sm p {
+    color: #aab2e8;
+  }
+
+  .demo {
+    margin-top: 1.4rem;
+    display: flex;
+    gap: 0.9rem;
+  }
+  .pg {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.7rem;
+    display: grid;
+    gap: 0.45rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .pg i {
+    display: block;
+    aspect-ratio: 4/3;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #dfe3ff, #8f9bff);
+  }
+  .pg b {
+    height: 7px;
+    border-radius: 4px;
+    background: var(--line);
+  }
+  .pg b:last-child {
+    width: 55%;
+    background: var(--blue);
+    opacity: 0.6;
+  }
+  .lbl {
+    margin-top: 0.8rem;
+    display: grid;
+    gap: 0.4rem;
+    padding: 0.8rem;
+    border: 1px dashed #aab2e8;
+    border-radius: 12px;
+    font: 600 0.75rem var(--font-head);
+    color: var(--navy);
+  }
+  .bars {
+    height: 26px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--deep-blue) 0 2px,
+      transparent 2px 5px,
+      var(--deep-blue) 5px 6px,
+      transparent 6px 9px
+    );
+  }
+  .lbl strong {
+    font-size: 1rem;
+    color: var(--blue);
+  }
+  .sku {
+    margin-top: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .sku code {
+    font:
+      600 0.72rem 'SF Mono',
+      ui-monospace,
+      monospace;
+    background: var(--blue-soft);
+    color: var(--navy);
+    padding: 0.3rem 0.5rem;
+    border-radius: 8px;
+  }
+
+  .more {
+    margin-top: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 14px;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    color: var(--accent-ink);
+    font-size: 0.95rem;
+  }
+  .more a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
+  }
+  .dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgb(255 138 61 / 0.25);
+  }
+
+  @media (max-width: 900px) {
+    .card,
+    .card.lg,
+    .card.md,
+    .card.sm {
+      grid-column: span 6;
+      grid-row: auto;
+    }
+  }
+</style>

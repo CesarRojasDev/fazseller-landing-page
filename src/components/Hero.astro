@@ -1,0 +1,284 @@
+---
+import Icon from './Icon.astro'
+const chips = [
+  'Fácil de usar',
+  'Listo en minutos',
+  'Para todos los niveles',
+]
+const floaters = [
+  { icon: 'book', label: 'Catálogos', cls: 'f1' },
+  { icon: 'label', label: 'Etiquetas', cls: 'f2' },
+  { icon: 'barcode', label: 'SKU', cls: 'f3' },
+  { icon: 'sync', label: 'Stock y precio', cls: 'f4', soon: true },
+]
+---
+
+<section class='hero' id='main'>
+  <div class='mesh' aria-hidden='true'></div>
+  <div class='grid-bg' aria-hidden='true'></div>
+  <div class='container wrap'>
+    <div class='copy'>
+      <span class='eyebrow reveal'
+        ><Icon name='bolt' size={14} /> Herramientas para sellers</span
+      >
+      <h1 class='reveal' style='--d:80ms'>
+        Crea. Organiza.<br /><span class='grad-text'>Vende más.</span>
+      </h1>
+      <p class='lead reveal' style='--d:160ms'>FazSeller es todo lo que necesitas para organizar tus productos y simplificar tu trabajo como seller en un solo lugar.</p>
+      <div class='actions reveal' style='--d:240ms' id='empezar'>
+        <a href='#planes' class='btn btn-primary'
+          >Ver Planes <Icon name='arrow' size={18} /></a
+        >
+        <a href='#herramientas' class='btn btn-secondary'>Ver herramientas</a>
+      </div>
+      <ul class='chips reveal' style='--d:320ms'>
+        {
+          chips.map((c) => (
+            <li>
+              <Icon name='check' size={16} /> {c}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class='visual reveal' style='--d:200ms' aria-hidden='true'>
+      <div class='plate'>
+        <div class='core'>
+          <svg width='84' height='84' viewBox='0 0 40 40' fill='none'
+            ><path d='M25 2 6 23h11l-4 15L34 15H22z' fill='url(#hg)'
+            ></path><defs
+              ><linearGradient
+                id='hg'
+                x1='6'
+                y1='2'
+                x2='34'
+                y2='38'
+                gradientUnits='userSpaceOnUse'
+                ><stop stop-color='#5a6bff'></stop><stop
+                  offset='1'
+                  stop-color='#1313F2'></stop></linearGradient
+              ></defs
+            ></svg
+          >
+        </div>
+      </div>
+      {
+        floaters.map((f) => (
+          <div class={`float ${f.cls}`}>
+            <span class='ic'>
+              <Icon name={f.icon} size={22} />
+            </span>
+            <span>{f.label}</span>
+            {f.soon && <em>Pronto</em>}
+          </div>
+        ))
+      }
+      <svg class='lines' viewBox='0 0 520 520' fill='none'>
+        <path
+          d='M260 260 120 110M260 260 410 150M260 260 100 400M260 260 420 410'
+          stroke='#1313F2'
+          stroke-opacity='.25'
+          stroke-dasharray='4 6'></path>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(3rem, 7vw, 6rem) clamp(4rem, 8vw, 7rem);
+    overflow: hidden;
+  }
+  .mesh {
+    position: absolute;
+    inset: -20% -10% auto auto;
+    width: 70vw;
+    height: 70vw;
+    max-width: 900px;
+    max-height: 900px;
+    background: radial-gradient(
+      closest-side,
+      rgb(19 19 242 / 0.28),
+      transparent 70%
+    );
+    filter: blur(30px);
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.45;
+    mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 30%,
+      #000 30%,
+      transparent 75%
+    );
+  }
+  .wrap {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    align-items: center;
+    gap: 3rem;
+  }
+  .copy {
+    display: grid;
+    gap: 1.6rem;
+    justify-items: start;
+  }
+  h1 {
+    font-size: clamp(2.8rem, 6.6vw, 5.2rem);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+  }
+  .lead {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    color: var(--muted);
+    max-width: 540px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+  .chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+  .chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .chips :global(svg) {
+    color: var(--blue);
+  }
+
+  .visual {
+    position: relative;
+    aspect-ratio: 1;
+    width: min(100%, 520px);
+    justify-self: center;
+  }
+  .lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .plate {
+    position: absolute;
+    inset: 22%;
+    border-radius: 34px;
+    background: linear-gradient(145deg, #fff, #eef0ff);
+    box-shadow:
+      var(--shadow-lg),
+      inset 0 0 0 1px rgb(19 19 242 / 0.12),
+      inset 0 -14px 30px rgb(19 19 242 / 0.08);
+    transform: perspective(900px) rotateX(18deg) rotateZ(-8deg);
+    display: grid;
+    place-items: center;
+    animation: bob 6s ease-in-out infinite;
+  }
+  .core {
+    transform: rotateZ(8deg);
+    filter: drop-shadow(0 14px 18px rgb(19 19 242 / 0.35));
+  }
+  .float {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 0.65rem 0.9rem 0.65rem 0.65rem;
+    font: 600 0.85rem var(--font-head);
+    color: var(--deep-blue);
+    box-shadow:
+      var(--shadow-sm),
+      0 18px 40px -18px rgb(19 19 242 / 0.35);
+    animation: bob 5s ease-in-out infinite;
+  }
+  .float .ic {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: var(--blue-soft);
+    color: var(--blue);
+  }
+  .float em {
+    font: 600 0.65rem var(--font-head);
+    font-style: normal;
+    color: var(--warn);
+    background: #fff8ee;
+    border: 1px solid #f5c98d;
+    padding: 0.25rem 0.45rem;
+    border-radius: 999px;
+  }
+  .f1 {
+    top: 6%;
+    left: 2%;
+    animation-delay: -1s;
+  }
+  .f2 {
+    top: 14%;
+    right: -2%;
+    animation-delay: -2.5s;
+  }
+  .f3 {
+    bottom: 10%;
+    left: -2%;
+    animation-delay: -4s;
+  }
+  .f4 {
+    bottom: 4%;
+    right: 2%;
+    animation-delay: -3s;
+  }
+
+  @keyframes bob {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -12px;
+    }
+  }
+  @keyframes drift {
+    to {
+      transform: translate(-6%, 8%) scale(1.08);
+    }
+  }
+
+  @media (max-width: 920px) {
+    .wrap {
+      grid-template-columns: 1fr;
+    }
+    .visual {
+      max-width: 400px;
+    }
+    .f2 {
+      right: 0;
+    }
+    .f3 {
+      left: 0;
+    }
+  }
+</style>

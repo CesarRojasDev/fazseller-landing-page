@@ -1,0 +1,82 @@
+---
+import Icon from './Icon.astro';
+const feats = ['Sincronización en tiempo real', 'Reglas automáticas de precio', 'Alertas de stock bajo', 'Un panel para todos tus canales'];
+---
+<section class="section soon" id="proximamente">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="container grid">
+    <div class="copy reveal">
+      <span class="tag"><Icon name="clock" size={14} /> Próximamente</span>
+      <h2>Actualización de <span class="g">stock y precio</span></h2>
+      <p>Mantén tu inventario y tus precios siempre al día en todos tus canales, sin tocar cada publicación una por una. Estamos construyéndolo y quienes se unan ahora tendrán acceso anticipado.</p>
+      <ul>{feats.map((f) => <li><Icon name="check" size={18} /> {f}</li>)}</ul>
+
+      <form class="wl" id="waitlist" novalidate>
+        <label class="sr" for="email">Correo electrónico</label>
+        <input id="email" name="email" type="email" required placeholder="tu@correo.com" autocomplete="email" />
+        <button class="btn btn-light" type="submit">Unirme a la lista</button>
+        <p class="msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="mock reveal" style="--d:140ms" aria-hidden="true">
+      <div class="panel">
+        <div class="ph"><b>Sincronización</b><span class="pill">Pronto</span></div>
+        {[['Polo azul · M', '42 uds', '$24.90'], ['Polo negro · L', '8 uds', '$24.90'], ['Gorra clásica', '120 uds', '$14.50'], ['Mochila urbana', '16 uds', '$39.00']].map(([n, s, p], i) => (
+          <div class="row">
+            <span class="dot" style={`--i:${i}`}></span>
+            <span class="nm">{n}</span>
+            <span class="st">{s}</span>
+            <span class="pr">{p}</span>
+          </div>
+        ))}
+        <div class="sync"><Icon name="sync" size={16} /> Actualizando en 4 canales…</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  const form = document.querySelector<HTMLFormElement>('#waitlist');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = form.querySelector<HTMLElement>('.msg')!;
+    const input = form.querySelector<HTMLInputElement>('input')!;
+    if (!input.validity.valid || !input.value) {
+      msg.textContent = 'Ingresa un correo válido.'; msg.dataset.state = 'err'; return;
+    }
+    // TODO: conectar con tu servicio (Formspree, Resend, Mailchimp, endpoint propio…)
+    msg.textContent = '¡Listo! Te avisaremos apenas esté disponible.'; msg.dataset.state = 'ok';
+    form.reset();
+  });
+</script>
+<style>
+  .soon { background: var(--deep-blue); color: #cfd4ff; overflow: hidden; }
+  .glow { position: absolute; inset: auto -10% -40% auto; width: 60vw; height: 60vw; background: radial-gradient(closest-side, rgb(19 19 242 / .55), transparent 70%); filter: blur(40px); }
+  .grid { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 3.5rem; align-items: center; }
+  .copy { display: grid; gap: 1.3rem; }
+  .tag { display: inline-flex; align-items: center; gap: .45rem; width: max-content; font: 600 .78rem var(--font-head); letter-spacing: .08em; text-transform: uppercase; color: #ffd08a; background: rgb(224 123 0 / .15); border: 1px solid rgb(245 201 141 / .35); padding: .5rem .8rem; border-radius: 999px; }
+  h2 { color: #fff; font-size: clamp(2rem, 4.4vw, 3.4rem); font-weight: 700; }
+  .g { background: linear-gradient(100deg, #8f9bff, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .copy > p { font-size: 1.1rem; color: #aab2e8; max-width: 52ch; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .7rem 1.4rem; }
+  li { display: flex; gap: .55rem; align-items: center; font-size: .95rem; color: #e1e5ff; }
+  li :global(svg) { color: #8f9bff; flex: none; }
+  .wl { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: .6rem; }
+  .wl input { flex: 1 1 240px; padding: 1rem 1.1rem; border-radius: 14px; border: 1px solid rgb(255 255 255 / .2); background: rgb(255 255 255 / .08); color: #fff; font: 500 1rem var(--font-body); }
+  .wl input::placeholder { color: #8b93cf; }
+  .msg { flex-basis: 100%; min-height: 1.4em; font-size: .9rem; }
+  .msg[data-state='ok'] { color: #7ce0a6; } .msg[data-state='err'] { color: #ff9b9b; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+  .panel { background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .14); border-radius: 22px; padding: 1.4rem; display: grid; gap: .5rem; backdrop-filter: blur(10px); box-shadow: 0 40px 80px -30px #000; transform: perspective(1000px) rotateY(-8deg) rotateX(3deg); }
+  .ph { display: flex; justify-content: space-between; align-items: center; color: #fff; font: 600 1rem var(--font-head); margin-bottom: .4rem; }
+  .pill { font: 600 .68rem var(--font-head); color: #ffd08a; border: 1px solid rgb(245 201 141 / .4); padding: .3rem .55rem; border-radius: 999px; }
+  .row { display: grid; grid-template-columns: 10px 1fr auto auto; gap: .9rem; align-items: center; padding: .85rem .9rem; border-radius: 12px; background: rgb(255 255 255 / .05); font-size: .9rem; }
+  .nm { color: #fff; } .st { color: #8f9bff; } .pr { color: #fff; font-weight: 600; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #5ae08f; animation: pulse 2s ease-in-out infinite; animation-delay: calc(var(--i) * .35s); }
+  .sync { display: flex; gap: .5rem; align-items: center; color: #8f9bff; font-size: .85rem; margin-top: .4rem; }
+  .sync :global(svg) { animation: spin 3s linear infinite; }
+  @keyframes pulse { 50% { opacity: .35; transform: scale(.7); } }
+  @keyframes spin { to { rotate: 360deg; } }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } ul { grid-template-columns: 1fr; } .panel { transform: none; } }
+</style>

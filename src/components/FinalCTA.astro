@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+---
+<section class="section fin">
+  <div class="container">
+    <div class="box reveal">
+      <div class="shine" aria-hidden="true"></div>
+      <h2>Automatiza. Sincroniza. <br />Escala.</h2>
+      <p>Empieza hoy con tus catálogos, etiquetas y SKU. Lo demás viene en camino.</p>
+      <div class="a">
+        <a href="#herramientas" class="btn btn-light">Empezar gratis <Icon name="arrow" size={18} /></a>
+        <a href="#proximamente" class="btn ghost">Unirme a la lista de espera</a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .fin { padding-top: 0; }
+  .box { position: relative; overflow: hidden; text-align: center; padding: clamp(3rem, 7vw, 5.5rem) 1.5rem; border-radius: 32px; background: linear-gradient(135deg, var(--blue), var(--navy)); color: #cfd4ff; display: grid; gap: 1.3rem; justify-items: center; box-shadow: var(--shadow-lg); }
+  .shine { position: absolute; inset: -40% auto auto -10%; width: 60%; aspect-ratio: 1; background: radial-gradient(closest-side, rgb(255 255 255 / .25), transparent); }
+  h2 { position: relative; color: #fff; font-size: clamp(2.2rem, 5.4vw, 4rem); font-weight: 800; }
+  p { position: relative; max-width: 50ch; font-size: 1.1rem; }
+  .a { position: relative; display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
+  .ghost { color: #fff; border-color: rgb(255 255 255 / .4); } .ghost:hover { background: rgb(255 255 255 / .12); }
+</style>

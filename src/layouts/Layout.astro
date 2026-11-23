@@ -1,0 +1,87 @@
+---
+import '../styles/global.css'
+interface Props {
+  title?: string
+  description?: string
+}
+const {
+  title = 'FazSeller — Herramientas inteligentes para vendedores y e-commerce.',
+  description = 'Genera catálogos, etiquetas y SKU en minutos. FazSeller automatiza el trabajo repetitivo de tu e-commerce para que te enfoques en vender.',
+} = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const ogImage = new URL('/og.svg', Astro.site)
+---
+
+<!doctype html>
+<html lang='es'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <title>{title}</title>
+    <meta name='description' content={description} />
+    <meta name='theme-color' content='#1313F2' />
+    <link rel='canonical' href={canonical} />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta property='og:type' content='website' />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:url' content={canonical} />
+    <meta property='og:image' content={ogImage} />
+    <meta name='twitter:card' content='summary_large_image' />
+    <script
+      type='application/ld+json'
+      is:inline
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'FazSeller',
+        applicationCategory: 'BusinessApplication',
+        description,
+        url: Astro.site?.toString(),
+      })}
+    />
+    <script is:inline>
+      document.documentElement.classList.add('js')
+    </script>
+  </head>
+  <body>
+    <a class='skip' href='#main'>Saltar al contenido</a>
+    <slot />
+    <script>
+      // Scroll reveal ligero (sin dependencias)
+      const els = document.querySelectorAll<HTMLElement>('.reveal')
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries)
+              if (e.isIntersecting) {
+                e.target.classList.add('in')
+                io.unobserve(e.target)
+              }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+        )
+        els.forEach((el) => io.observe(el))
+      } else els.forEach((el) => el.classList.add('in'))
+    </script>
+  </body>
+</html>
+<style is:global>
+  .skip {
+    position: absolute;
+    left: -999px;
+    top: 0;
+    background: var(--blue);
+    color: #fff;
+    padding: 0.7rem 1rem;
+    z-index: 100;
+    border-radius: 0 0 10px 0;
+  }
+  .skip:focus {
+    left: 0;
+  }
+  html:not(.js) .reveal {
+    opacity: 1;
+    transform: none;
+  }
+</style>

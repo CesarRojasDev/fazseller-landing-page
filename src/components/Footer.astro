@@ -1,0 +1,24 @@
+---
+import Logo from './Logo.astro';
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="container row">
+    <div class="b"><Logo /><p>Herramientas que ahorran tiempo a los sellers de e-commerce.</p></div>
+    <nav aria-label="Pie">
+      <a href="#herramientas">Herramientas</a>
+      <a href="#planes">Planes</a>
+      <a href="#proximamente">Próximamente</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+  <div class="container copy">© {year} FazSeller. Todos los derechos reservados.</div>
+</footer>
+<style>
+  footer { border-top: 1px solid var(--line); padding-block: 3rem 2rem; }
+  .row { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .b { display: grid; gap: .8rem; max-width: 320px; color: var(--muted); font-size: .92rem; }
+  nav { display: flex; gap: 1.6rem; font-weight: 500; color: var(--muted); align-items: flex-start; }
+  nav a:hover { color: var(--blue); }
+  .copy { margin-top: 2.5rem; color: #8b90b0; font-size: .85rem; }
+</style>

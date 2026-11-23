@@ -1,0 +1,21 @@
+---
+// PLACEHOLDER: reemplazar por el logo final en alta calidad (SVG).
+// Para cambiarlo, edita solo este componente.
+interface Props { dark?: boolean; size?: number }
+const { dark = false, size = 34 } = Astro.props;
+---
+<a href="/" class:list={['logo', { dark }]} aria-label="FazSeller — inicio">
+  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+    <path d="M25 2 6 23h11l-4 15L34 15H22z" fill="url(#lg)" />
+    <defs>
+      <linearGradient id="lg" x1="6" y1="2" x2="34" y2="38" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#4a5bff" /><stop offset="1" stop-color="#1313F2" />
+      </linearGradient>
+    </defs>
+  </svg>
+  <span>FazSeller</span>
+</a>
+<style>
+  .logo { display: inline-flex; align-items: center; gap: .55rem; font: 700 1.4rem/1 var(--font-head); letter-spacing: -0.04em; color: var(--deep-blue); }
+  .logo.dark { color: #fff; }
+</style>
